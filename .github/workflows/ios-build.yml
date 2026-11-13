@@ -47,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ios-simulator-app
-          path: build/Build/Products/Debug-iphonesimulator/iosApp.app
+          path: build/Build/Products/Debug-iphonesimulator/*.app
 
       - name: Build Unsigned iOS Device App & Package as .ipa
         run: |
@@ -62,7 +62,7 @@ jobs:
             CODE_SIGN_IDENTITY="" \
             build
           mkdir -p Payload
-          cp -r build_device/Build/Products/Release-iphoneos/iosApp.app Payload/
+          cp -r build_device/Build/Products/Release-iphoneos/*.app Payload/
           zip -r iosApp-unsigned.ipa Payload
 
       - name: Upload Unsigned .ipa Artifact
