@@ -1,7 +1,4 @@
 package com.example.firstkmp
 
-class WasmPlatform: Platform {
-    override val name: String = "Web with Kotlin/Wasm"
-}
+import io.ktor.util.Platform
 
-actual fun getPlatform(): Platform = WasmPlatform()
