@@ -5,11 +5,11 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-  workflow_dispatch: # Allows you to trigger the build manually with a button on GitHub
+  workflow_dispatch:
 
 jobs:
   build-ios:
-    runs-on: macos-latest # Apple Silicon (M-series) macOS runner
+    runs-on: macos-latest
 
     steps:
       - name: Checkout Repository
@@ -25,6 +25,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
       - name: Compile Shared KMP Framework for iOS Simulator
         run: ./gradlew :shared:linkDebugFrameworkIosSimulatorArm64
 
@@ -37,7 +40,7 @@ jobs:
             -sdk iphonesimulator \
             -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO \
-             CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_REQUIRED=NO \
             build
 
       - name: Upload Simulator .app Artifact
@@ -62,7 +65,7 @@ jobs:
           cp -r build_device/Build/Products/Release-iphoneos/iosApp.app Payload/
           zip -r iosApp-unsigned.ipa Payload
 
-      - name: Upload Unsigned .ipa Artifact (For iPhone Sideloading on Windows)
+      - name: Upload Unsigned .ipa Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ios-unsigned-ipa
