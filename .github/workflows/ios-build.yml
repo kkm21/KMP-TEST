@@ -26,7 +26,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Compile Shared KMP Framework for iOS Simulator
-        run: ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64
+        run: ./gradlew :shared:linkDebugFrameworkIosSimulatorArm64
 
       - name: Build iOS App for Simulator (.app)
         run: |
